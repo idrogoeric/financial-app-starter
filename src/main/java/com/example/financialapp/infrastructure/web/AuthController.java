@@ -37,7 +37,7 @@ public class AuthController {
         u.setId(UUID.randomUUID());
         u.setUsername(req.username);
         u.setPasswordHash(encoder.encode(req.password));
-        u.setRoles(Set.of("ROLE_USER"));
+        u.setRoles(Set.of("ROLE_EMPLOYEE"));
         usersRepo.save(u);
         return ResponseEntity.noContent().build();
     }

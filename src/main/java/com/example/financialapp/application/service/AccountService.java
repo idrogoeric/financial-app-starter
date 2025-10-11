@@ -6,9 +6,11 @@ import com.example.financialapp.application.port.out.LoadAccountPort;
 import com.example.financialapp.application.port.out.SaveAccountPort;
 import com.example.financialapp.domain.model.Account;
 import com.example.financialapp.domain.model.Transaction;
+import com.example.financialapp.infrastructure.web.dto.TransactionRes;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,7 +26,7 @@ public class AccountService implements AccountUseCase {
     }
 
     @Override
-    public UUID createAccount(UUID ownerId) {
+    public UUID open(UUID ownerId, String type) {
         Account account = new Account(UUID.randomUUID(), ownerId, BigDecimal.ZERO);
         saveAccountPort.save(account);
         return account.getId();
@@ -44,6 +46,16 @@ public class AccountService implements AccountUseCase {
         acc.debit(amount);
         saveAccountPort.save(acc);
         appendTransactionPort.append(new Transaction(UUID.randomUUID(), accountId, Transaction.Type.WITHDRAWAL, amount, Instant.now()));
+    }
+
+    @Override
+    public List<TransactionRes> historyOf(UUID id) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal balanceOf(UUID id) {
+        return null;
     }
 
     private static <T> T require(Optional<T> t) {
